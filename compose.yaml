@@ -1,0 +1,14 @@
+services:
+  temnomor-access-tgbot:
+    build:
+      context: .
+    restart: always
+    volumes:
+      - ./src:/app
+    env_file:
+      - .env
+    command:
+      - "sh"
+      - "-c"
+      - |
+        python main.py
