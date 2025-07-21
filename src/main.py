@@ -57,7 +57,7 @@ async def main() -> None:
         dp.message.middleware(PrivateChatsOnlyMiddleware())
 
         scheduler.start()
-        # add_jobs_to_scheduler()
+        add_jobs_to_scheduler()
 
         logger.info('Telegram bot polling has started...')
         await dp.start_polling(bot)
