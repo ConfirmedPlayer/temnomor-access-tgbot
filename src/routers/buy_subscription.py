@@ -50,13 +50,14 @@ async def buy_subscription_query_handler(query: CallbackQuery):
 
 @router.callback_query(F.data == 'force_buy_subscription')
 async def force_buy_subscription_query_handler(
-    query: CallbackQuery, state: FSMContext
+    query: CallbackQuery, state: FSMContext | None = None
 ):
     message_id = await redis_get_message_id(
         f'start_message:{query.from_user.id}'
     )
 
-    await state.set_state(BuyingSubscription.reading_rules)
+    if state:
+        await state.set_state(BuyingSubscription.reading_rules)
 
     keyboard = InlineKeyboardBuilder()
     keyboard.button(text='🚫 Отменить', callback_data='cancel')
