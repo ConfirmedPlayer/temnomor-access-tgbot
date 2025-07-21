@@ -22,12 +22,12 @@ async def create_invoice_url(
     amount_rub: int = env.SUBSCRIPTION_PRICE_RUBLES,
     redirect_url: str = env.TELEGRAM_BOT_URL,
 ) -> str:
-    # payment_form = await yoomoney.create_invoice(
-    #    amount_rub=amount_rub,
-    #    label=payment_id,
-    #    success_redirect_url=redirect_url,
-    #    payment_source=InvoiceSource.YOOMONEY_WALLET,
-    # )
+    payment_form = await yoomoney.create_invoice(
+        amount_rub=amount_rub,
+        label=payment_id,
+        success_redirect_url=redirect_url,
+        payment_source=InvoiceSource.YOOMONEY_WALLET,
+    )
     scheduler.add_job(
         func=check_payment_in_background,
         kwargs={
@@ -37,8 +37,8 @@ async def create_invoice_url(
         },
         next_run_time=datetime.now(),
     )
-    return 'https://temnomor.ru/'
-    # return payment_form.url
+    # return 'https://temnomor.ru/'
+    return payment_form.url
 
 
 async def create_renewal_invoice_url(
@@ -48,27 +48,18 @@ async def create_renewal_invoice_url(
     amount_rub: int = env.SUBSCRIPTION_PRICE_RUBLES,
     redirect_url: str = env.TELEGRAM_BOT_URL,
 ) -> str:
-    # payment_form = await yoomoney.create_invoice(
-    #    amount_rub=amount_rub,
-    #    label=payment_id,
-    #    success_redirect_url=redirect_url,
-    #    payment_source=InvoiceSource.YOOMONEY_WALLET,
-    # )
-    scheduler.add_job(
-        func=check_renewal_payment_in_background,
-        kwargs={
-            'client_uuid': subscription_uuid,
-            'payment_id': payment_id,
-            'telegram_user_id': telegram_user_id,
-        },
-        next_run_time=datetime.now(),
+    payment_form = await yoomoney.create_invoice(
+        amount_rub=amount_rub,
+        label=payment_id,
+        success_redirect_url=redirect_url,
+        payment_source=InvoiceSource.YOOMONEY_WALLET,
     )
-    return 'https://temnomor.ru/'
-    # return payment_form.url
+    # return 'https://temnomor.ru/'
+    return payment_form.url
 
 
 async def is_payment_successful(payment_id: StringifiedUUID) -> bool:
-    return random.choice((True, False, False))
+    # return random.choice((True, False, False))
     return await yoomoney.is_payment_successful(payment_id)
 
 
@@ -80,7 +71,7 @@ async def check_payment_in_background(
 ) -> None:
     future = datetime.now() + timedelta(minutes=how_long)
     while datetime.now() < future:
-        await asyncio.sleep(10)
+        await asyncio.sleep(60)
         payment_successful = await is_payment_successful(payment_id)
         if payment_successful:
             print('!!! PAYMENT SUCCESSFUL !!!')
@@ -111,32 +102,32 @@ async def check_payment_in_background(
     )
 
 
-async def check_renewal_payment_in_background(
-    client_uuid: StringifiedUUID,
-    payment_id: StringifiedUUID,
-    telegram_user_id: TelegramUserId,
-    how_long: Minutes = 15,
-) -> None:
-    future = datetime.now() + timedelta(minutes=how_long)
-    while datetime.now() < future:
-        await asyncio.sleep(10)
-        payment_successful = await is_payment_successful(payment_id)
-        if payment_successful:
-            print('update payment SUCCESSFUL! updating...')
-            return await update_subscription_and_send_message(
-                client_uuid=client_uuid,
-                payment_id=payment_id,
-                telegram_user_id=telegram_user_id,
-            )
-        else:
-            print('update payment not succesfull.. sleeping')
-            continue
-
-    await bot.send_message(chat_id=telegram_user_id, text=mt.payment_expired)
-
-    return await send_message_and_delete_previous(
-        chat_id=telegram_user_id,
-        text=mt.command_start,
-        redis_key='start_message',
-        reply_markup=user_keyboard,
-    )
+# async def check_renewal_payment_in_background(
+#    client_uuid: StringifiedUUID,
+#    payment_id: StringifiedUUID,
+#   telegram_user_id: TelegramUserId,
+#    how_long: Minutes = 15,
+# ) -> None:
+#    future = datetime.now() + timedelta(minutes=how_long)
+#    while datetime.now() < future:
+#        await asyncio.sleep(60)
+#       payment_successful = await is_payment_successful(payment_id)
+#        if payment_successful:
+#            print('update payment SUCCESSFUL! updating...')
+#            return await update_subscription_and_send_message(
+#                client_uuid=client_uuid,
+#                payment_id=payment_id,
+#                telegram_user_id=telegram_user_id,
+#            )
+#        else:
+#            print('update payment not succesfull.. sleeping')
+#            continue
+#
+#    await bot.send_message(chat_id=telegram_user_id, text=mt.payment_expired)
+#
+#    return await send_message_and_delete_previous(
+#        chat_id=telegram_user_id,
+#        text=mt.command_start,
+#        redis_key='start_message',
+#        reply_markup=user_keyboard,
+#    )
