@@ -118,7 +118,7 @@ async def subscription_query_handler(query: CallbackQuery, state: FSMContext):
     subscription_expiration_date = datetime.fromtimestamp(
         timestamp=subscription_expiration_date
     )
-    expired = datetime.now() > subscription_expiration_date
+    expired = subscription_expiration_date.year != 1970 and datetime.now() > subscription_expiration_date
     human_readable_date = subscription_expiration_date.strftime('%d.%m.%Y')
 
     current_message_id = await redis_get_message_id(
