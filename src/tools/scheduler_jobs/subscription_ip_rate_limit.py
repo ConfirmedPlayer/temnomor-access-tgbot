@@ -13,10 +13,7 @@ async def disallow_simultaneous_connections(
     iteration_sleep_time: Seconds = 3,
     turn_back_on_subscription_after: Minutes = 3,
 ) -> NoReturn:
-    x = 0
     while True:
-        x += 1
-        print(x)
         online_clients = await x_ui_session.get_all_online_clients()
         for online_client in online_clients:
             ip_addresses = await x_ui_session.get_client_ip_addresses(

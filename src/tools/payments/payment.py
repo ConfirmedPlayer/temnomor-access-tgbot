@@ -10,8 +10,7 @@ from core.types import Minutes, StringifiedUUID, TelegramUserId
 from keyboards import user_keyboard
 from tools.functions import (
     add_subscription_and_send_message,
-    send_message_and_delete_previous,
-    update_subscription_and_send_message,
+    send_message_and_delete_previous
 )
 
 
@@ -74,22 +73,18 @@ async def check_payment_in_background(
         await asyncio.sleep(60)
         payment_successful = await is_payment_successful(payment_id)
         if payment_successful:
-            print('!!! PAYMENT SUCCESSFUL !!!')
             subscription = await x_ui_session.get_client_settings_by_email(
                 email=f'{telegram_user_id}-{subscription_name}'
             )
             if not subscription:
-                print('subscription paid but not created. creating...')
                 return await add_subscription_and_send_message(
                     telegram_user_id=telegram_user_id,
                     payment_id=payment_id,
                     subscription_name=subscription_name,
                 )
             else:
-                print("subscription paid and it's created already!")
                 return
         else:
-            print('payment not successfull... sleeping...')
             continue
 
     await bot.send_message(chat_id=telegram_user_id, text=mt.payment_expired)

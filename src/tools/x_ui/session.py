@@ -88,7 +88,6 @@ class XUISession:
         url = env.X_UI_API_URL + '/onlines'
         response = await self.request_json(url=url, method='POST')
         online_clients = response['obj']
-        print(f'{online_clients=}')
         if online_clients is None:
             return set()
         return set(online_clients)
@@ -97,7 +96,6 @@ class XUISession:
         url = env.X_UI_API_URL + f'/clientIps/{email}'
         response = await self.request_json(url=url, method='POST')
         if not isinstance(response['obj'], list):
-            print('No IP Record!')
             return []
         client_ips: list[str] = orjson.loads(response['obj'])
         return client_ips
