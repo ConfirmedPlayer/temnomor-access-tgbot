@@ -44,15 +44,9 @@ async def disallow_simultaneous_connections(
                     )
 
                     logger.info('adding abusing job...')
-
-                    scheduler.add_job(
-                        func=x_ui_session.clear_client_ip_addresses,
-                        kwargs={'email': online_client},
-                        next_run_time=datetime.now()
-                        + timedelta(
-                            minutes=turn_back_on_subscription_after - 1
-                        ),
-                    )
+                    
+                    await x_ui_session.clear_client_ip_addresses(email=online_client)
+                    await asyncio.sleep(15)
 
                     scheduler.add_job(
                         func=x_ui_session.toggle_subscription_by_uuid,
