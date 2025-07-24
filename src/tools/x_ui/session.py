@@ -1,5 +1,4 @@
 import secrets
-from typing import Any
 
 import orjson
 from loguru import logger
@@ -95,9 +94,11 @@ class XUISession:
     async def get_client_ip_addresses(self, email: str) -> list[str]:
         url = env.X_UI_API_URL + f'/clientIps/{email}'
         response = await self.request_json(url=url, method='POST')
-        if not isinstance(response['obj'], list):
+        if response['obj'] == 'No IP Record':
             return []
         client_ips: list[str] = orjson.loads(response['obj'])
+        if not isinstance(client_ips, list):
+            return []
         return client_ips
 
     async def clear_client_ip_addresses(self, email: str) -> bool:
@@ -222,9 +223,10 @@ class XUISession:
         self, client_uuid: StringifiedUUID, enable: bool
     ) -> bool:
         current_settings = await self.get_client_settings_by_uuid(
-            uuid=client_uuid
+            client_uuid=client_uuid
         )
         current_settings.enable = enable
+        logger.info(f'Subscription was toggled. Current status of subscription: {enable:}')
         return await self._update_client(
             client_uuid=client_uuid, settings=current_settings
         )
