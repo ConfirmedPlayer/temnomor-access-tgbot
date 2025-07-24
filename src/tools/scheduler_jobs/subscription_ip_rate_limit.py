@@ -20,7 +20,6 @@ async def disallow_simultaneous_connections(
                 ip_addresses = await x_ui_session.get_client_ip_addresses(
                     online_client
                 )
-                logger.info(ip_addresses)
                 if len(ip_addresses) > 1:
                     logger.info(
                         f'The client "{online_client}" was seen abusing (sharing) the '
