@@ -14,6 +14,8 @@ from core.types import (
     TelegramUserId,
     UnixTimeStampInMilliseconds,
 )
+from contextlib import suppress
+from aiogram.exceptions import TelegramBadRequest
 from keyboards import user_keyboard
 
 
@@ -75,7 +77,8 @@ async def send_message_and_delete_previous(
         reply_markup=reply_markup,
     )
     if message_id := await redis_get_message_id(f'{redis_key}:{chat_id}'):
-        await bot.delete_message(chat_id=chat_id, message_id=message_id)
+        with suppress(TelegramBadRequest):
+            await bot.delete_message(chat_id=chat_id, message_id=message_id)
     await redis_storage.redis.set(f'{redis_key}:{chat_id}', message.message_id)
 
 
