@@ -31,7 +31,8 @@ def create_renewal_invoice_keyboard(
         text=f'💳 Оплатить {env.SUBSCRIPTION_PRICE_RUBLES}₽', url=invoice_url
     )
     keyboard.button(
-        text='🧾 Проверить оплату', callback_data=f'renewal_payment_id:{payment_id}'
+        text='🧾 Проверить оплату',
+        callback_data=f'renewal_payment_id:{payment_id}',
     )
     keyboard.button(
         text='🚫 Отменить покупку', callback_data='cancel_with_warning'

@@ -44,8 +44,10 @@ async def disallow_simultaneous_connections(
                     )
 
                     logger.info('adding abusing job...')
-                    
-                    await x_ui_session.clear_client_ip_addresses(email=online_client)
+
+                    await x_ui_session.clear_client_ip_addresses(
+                        email=online_client
+                    )
                     await asyncio.sleep(15)
 
                     scheduler.add_job(

@@ -226,7 +226,9 @@ class XUISession:
             client_uuid=client_uuid
         )
         current_settings.enable = enable
-        logger.info(f'Subscription was toggled. Current status of subscription: {enable:}')
+        logger.info(
+            f'Subscription was toggled. Current status of subscription: {enable:}'
+        )
         return await self._update_client(
             client_uuid=client_uuid, settings=current_settings
         )

@@ -7,7 +7,11 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 import core.message_templates as mt
 from core.config import env, redis_storage, x_ui_session
-from keyboards import create_renewal_invoice_keyboard, guides_keyboard, user_keyboard
+from keyboards import (
+    create_renewal_invoice_keyboard,
+    guides_keyboard,
+    user_keyboard,
+)
 from states import BuyingSubscription
 from tools.functions import (
     new_uuid4_str,
@@ -15,7 +19,7 @@ from tools.functions import (
     redis_get_message_id,
     send_message_and_delete_previous,
     verify_subscription_name,
-    update_subscription_and_send_message
+    update_subscription_and_send_message,
 )
 from tools.payments import create_renewal_invoice_url, is_payment_successful
 
@@ -51,9 +55,7 @@ async def get_user_subscriptions(
     return user_subscriptions_list
 
 
-@router.callback_query(
-    F.data == 'my_subscriptions'
-)
+@router.callback_query(F.data == 'my_subscriptions')
 async def my_subscriptions_query_handler(query: CallbackQuery):
     user_has_subscriptions = await x_ui_session.user_has_subscriptions(
         query.from_user.id
@@ -118,7 +120,10 @@ async def subscription_query_handler(query: CallbackQuery, state: FSMContext):
     subscription_expiration_date = datetime.fromtimestamp(
         timestamp=subscription_expiration_date
     )
-    expired = subscription_expiration_date.year != 1970 and datetime.now() > subscription_expiration_date
+    expired = (
+        subscription_expiration_date.year != 1970
+        and datetime.now() > subscription_expiration_date
+    )
     human_readable_date = subscription_expiration_date.strftime('%d.%m.%Y')
 
     current_message_id = await redis_get_message_id(
@@ -213,12 +218,12 @@ async def renew_subscription_query_handler(
     invoice_url = await create_renewal_invoice_url(
         payment_id=invoice_uuid,
         telegram_user_id=query.from_user.id,
-        subscription_uuid=subscription_uuid
+        subscription_uuid=subscription_uuid,
     )
     invoice_keyboard = create_renewal_invoice_keyboard(
         payment_id=invoice_uuid, invoice_url=invoice_url
     )
-    
+
     await state.set_data({'subscription_uuid': subscription_uuid})
 
     await send_message_and_delete_previous(
@@ -239,7 +244,7 @@ async def check_payment_query_handler(query: CallbackQuery, state: FSMContext):
         await update_subscription_and_send_message(
             client_uuid=subscription_uuid,
             payment_id=payment_id,
-            telegram_user_id=query.from_user.id
+            telegram_user_id=query.from_user.id,
         )
         await state.clear()
         await query.answer()

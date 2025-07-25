@@ -10,7 +10,7 @@ from core.types import Minutes, StringifiedUUID, TelegramUserId
 from keyboards import user_keyboard
 from tools.functions import (
     add_subscription_and_send_message,
-    send_message_and_delete_previous
+    send_message_and_delete_previous,
 )
 
 
