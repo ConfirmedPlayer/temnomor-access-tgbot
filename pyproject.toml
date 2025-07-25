@@ -13,5 +13,5 @@ dependencies = [
     "orjson>=3.10.15",
     "pydantic-settings>=2.8.1",
     "python-dotenv>=1.0.1",
-    "redis>=5.2.1"
+    "redis>=5.2.1",
 ]
