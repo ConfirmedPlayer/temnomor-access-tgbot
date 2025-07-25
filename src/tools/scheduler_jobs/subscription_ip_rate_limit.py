@@ -10,7 +10,7 @@ from core.types import Minutes, Seconds
 
 
 async def disallow_simultaneous_connections(
-    iteration_sleep_time: Seconds = 3,
+    iteration_sleep_time: Seconds = 60,
     turn_back_on_subscription_after: Minutes = 3,
 ) -> NoReturn:
     try:
