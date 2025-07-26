@@ -4,8 +4,7 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 import core.message_templates as mt
-from core.config import env, redis_storage, x_ui_session
-from core.types import StringifiedUUID, TelegramUserId
+from core.config import x_ui_session
 from keyboards import create_invoice_keyboard, user_keyboard
 from states import BuyingSubscription
 from tools.functions import (
@@ -14,7 +13,6 @@ from tools.functions import (
     normalize_subscription_name,
     redis_get_message_id,
     send_message_and_delete_previous,
-    unix_timestamp_in_milliseconds,
     verify_subscription_name,
 )
 from tools.payments import create_invoice_url, is_payment_successful

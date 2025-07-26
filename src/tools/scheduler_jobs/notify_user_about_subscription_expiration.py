@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import core.message_templates as mt
-from core.config import bot, x_ui_session
+from core.config import x_ui_session
 from keyboards import user_keyboard
 from tools.functions import send_message_and_delete_previous
 

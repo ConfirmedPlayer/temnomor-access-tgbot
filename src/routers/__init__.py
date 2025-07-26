@@ -1,6 +1,5 @@
-from importlib import import_module
 import os
-
+from importlib import import_module
 
 routers = []
 

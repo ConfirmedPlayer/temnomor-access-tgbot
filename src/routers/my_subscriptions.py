@@ -1,4 +1,5 @@
 from datetime import date, datetime
+
 from aiogram import F, Router
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.fsm.context import FSMContext
@@ -6,7 +7,7 @@ from aiogram.types import CallbackQuery, CopyTextButton, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 import core.message_templates as mt
-from core.config import env, redis_storage, x_ui_session
+from core.config import env, x_ui_session
 from keyboards import (
     create_renewal_invoice_keyboard,
     guides_keyboard,
@@ -18,8 +19,8 @@ from tools.functions import (
     normalize_subscription_name,
     redis_get_message_id,
     send_message_and_delete_previous,
-    verify_subscription_name,
     update_subscription_and_send_message,
+    verify_subscription_name,
 )
 from tools.payments import create_renewal_invoice_url, is_payment_successful
 

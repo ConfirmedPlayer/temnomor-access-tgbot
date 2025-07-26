@@ -1,5 +1,3 @@
-import asyncio
-
 import orjson
 from aiohttp import ClientResponse, ClientSession
 

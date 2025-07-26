@@ -1,8 +1,8 @@
+import secrets
 from pathlib import Path
 
 from pydantic import AnyHttpUrl, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
-import secrets
 
 
 # Constants loaded from .env file or just constants
@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = 'TEMNOMOR ACCEES TELEGRAM BOT'
 
     SUBSCRIPTION_PRICE_RUBLES: int = 200
-    
+
     REDIS_HOSTNAME: str = 'my-redis'
 
     TELEGRAM_BOT_TOKEN: str
