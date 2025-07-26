@@ -1,21 +1,21 @@
 import re
+from contextlib import suppress
 from datetime import datetime, timedelta
 from re import Pattern
 from typing import Literal
 from uuid import uuid4
 
+from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import InlineKeyboardMarkup
 
 from core import message_templates as mt
-from core.config import bot, redis_storage, x_ui_session
+from core.config import bot, env, redis_storage, x_ui_session
 from core.types import (
     MessageTemplate,
     StringifiedUUID,
     TelegramUserId,
     UnixTimeStampInMilliseconds,
 )
-from contextlib import suppress
-from aiogram.exceptions import TelegramBadRequest
 from keyboards import user_keyboard
 
 
@@ -127,3 +127,7 @@ async def update_subscription_and_send_message(
         redis_key='start_message',
         reply_markup=user_keyboard,
     )
+
+
+def tokenize_callback(__callback_data: str) -> str:
+    return __callback_data + env.TELEGRAM_BOT_ADMIN_SECRET
