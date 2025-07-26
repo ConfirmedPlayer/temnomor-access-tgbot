@@ -10,13 +10,15 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = 'TEMNOMOR ACCEES TELEGRAM BOT'
 
     SUBSCRIPTION_PRICE_RUBLES: int = 200
+    
+    REDIS_HOSTNAME: str = 'my-redis'
 
     TELEGRAM_BOT_TOKEN: str
     TELEGRAM_BOT_ADMIN_ID: int
     TELEGRAM_BOT_ADMIN_USERNAME: str
     TELEGRAM_BOT_URL: AnyHttpUrl
 
-    TELEGRAM_BOT_ADMIN_SECRET: str = secrets.token_hex(16)
+    TELEGRAM_BOT_ADMIN_SECRET: str = secrets.token_hex(8)
 
     TELEGRAM_LOGGING_BOT_TOKEN: str
     TELEGRAM_LOGGING_CHAT_ID: int | str
