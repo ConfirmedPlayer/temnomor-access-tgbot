@@ -95,34 +95,3 @@ async def check_payment_in_background(
         redis_key='start_message',
         reply_markup=user_keyboard,
     )
-
-
-# async def check_renewal_payment_in_background(
-#    client_uuid: StringifiedUUID,
-#    payment_id: StringifiedUUID,
-#   telegram_user_id: TelegramUserId,
-#    how_long: Minutes = 15,
-# ) -> None:
-#    future = datetime.now() + timedelta(minutes=how_long)
-#    while datetime.now() < future:
-#        await asyncio.sleep(60)
-#       payment_successful = await is_payment_successful(payment_id)
-#        if payment_successful:
-#            print('update payment SUCCESSFUL! updating...')
-#            return await update_subscription_and_send_message(
-#                client_uuid=client_uuid,
-#                payment_id=payment_id,
-#                telegram_user_id=telegram_user_id,
-#            )
-#        else:
-#            print('update payment not succesfull.. sleeping')
-#            continue
-#
-#    await bot.send_message(chat_id=telegram_user_id, text=mt.payment_expired)
-#
-#    return await send_message_and_delete_previous(
-#        chat_id=telegram_user_id,
-#        text=mt.command_start,
-#        redis_key='start_message',
-#        reply_markup=user_keyboard,
-#    )

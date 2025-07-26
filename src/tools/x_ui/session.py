@@ -51,7 +51,6 @@ class XUISession:
             },
         )
         if response and response['success']:
-            logger.success('Successful authorization!')
             return True
         else:
             logger.critical(
