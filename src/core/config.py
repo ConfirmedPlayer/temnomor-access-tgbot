@@ -20,7 +20,7 @@ bot = Bot(
 logger_bot = Bot(token=env.TELEGRAM_LOGGING_BOT_TOKEN)
 
 redis_storage = RedisStorage(
-    redis=redis.Redis(host='my-redis', decode_responses=True),
+    redis=redis.Redis(host=env.REDIS_HOSTNAME, decode_responses=True),
     json_loads=orjson.loads,
     json_dumps=orjson.dumps,
 )
