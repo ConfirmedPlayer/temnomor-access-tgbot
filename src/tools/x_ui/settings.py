@@ -18,6 +18,8 @@ class XUISettings:
     tgId: str = ''
     comment: str = ''
     reset: int = 0
+    created_at: int = 0
+    updated_at: int = 0
 
     def __str__(self) -> str:
         settings = {
