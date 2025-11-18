@@ -11,3 +11,8 @@ class AdminAddingSubscription(StatesGroup):
     reading_telegram_user_id = State()
     reading_subscription_name = State()
     reading_expiration_time = State()
+
+
+class AdminMailing(StatesGroup):
+    reading_message = State()
+    reading_test_message = State()
