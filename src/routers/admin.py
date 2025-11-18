@@ -140,11 +140,11 @@ async def mailing_command_state_handler(msg: Message, state: FSMContext):
     telegram_user_ids = await x_ui_session.get_all_users_telegram_ids()
     for telegram_user_id in telegram_user_ids:
         try:
-            bot.send_message(chat_id=telegram_user_id, text=msg.text)
+            await bot.send_message(chat_id=telegram_user_id, text=msg.text)
             logger.info(f'Message sent to {telegram_user_id}')
         except TelegramRetryAfter as _ex:
             await asyncio.sleep(_ex.retry_after + 1)
-            bot.send_message(chat_id=telegram_user_id, text=msg.text)
+            await bot.send_message(chat_id=telegram_user_id, text=msg.text)
             logger.info(
                 f'Message sent to {telegram_user_id} after TelegramRetryAfter.'
             )
