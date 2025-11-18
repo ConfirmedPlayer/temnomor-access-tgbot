@@ -145,3 +145,11 @@ admin_prompt_subscription_expiration = (
 admin_prompt_subscription_name = 'Введите название подписки:'
 
 admin_new_subscription_successful = 'Подписка успешно добавлена!'
+
+admin_mailing_hello = 'Введите сообщение для рассылки пользователям:'
+
+admin_test_mailing_hello = (
+    'Введите сообщение для рассылки пользователям (тест):'
+)
+
+admin_mailing_success = 'Рассылка завершена.'
