@@ -1,12 +1,16 @@
+import asyncio
+
 from aiogram import Router
+from aiogram.exceptions import TelegramAPIError, TelegramRetryAfter
 from aiogram.filters import Filter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
+from loguru import logger
 
 from core import message_templates as mt
-from core.config import env, x_ui_session
+from core.config import bot, env, x_ui_session
 from keyboards import admin_keyboard
-from states import AdminAddingSubscription
+from states import AdminAddingSubscription, AdminMailing
 from tools.functions import (
     new_uuid4_str,
     normalize_subscription_name,
@@ -119,3 +123,53 @@ async def admin_reading_subscription_name_handler(
     await state.clear()
 
     await msg.answer(text=mt.admin_new_subscription_successful)
+
+
+@router.message(AdminCommandFilter('/mailing'))
+async def mailing_command_handler(msg: Message, state: FSMContext):
+    await state.set_state(AdminMailing.reading_message)
+    return await send_message_and_delete_previous(
+        chat_id=msg.from_user.id,
+        text=mt.admin_mailing_hello,
+        redis_key='admin_mailing_message',
+    )
+
+
+@router.message(AdminMailing.reading_message)
+async def mailing_command_state_handler(msg: Message, state: FSMContext):
+    telegram_user_ids = await x_ui_session.get_all_users_telegram_ids()
+    for telegram_user_id in telegram_user_ids:
+        try:
+            bot.send_message(chat_id=telegram_user_id, text=msg.text)
+            logger.info(f'Message sent to {telegram_user_id}')
+        except TelegramRetryAfter as _ex:
+            await asyncio.sleep(_ex.retry_after + 1)
+            bot.send_message(chat_id=telegram_user_id, text=msg.text)
+            logger.info(
+                f'Message sent to {telegram_user_id} after TelegramRetryAfter.'
+            )
+        except TelegramAPIError:
+            logger.warning(f'Failed to send message to {telegram_user_id}')
+        except Exception:
+            await state.clear()
+
+    await state.clear()
+    await bot.send_message(
+        chat_id=env.TELEGRAM_BOT_ADMIN_ID, text=mt.admin_mailing_success
+    )
+
+
+@router.message(AdminCommandFilter('/test_mailing'))
+async def test_mailing_command_handler(msg: Message, state: FSMContext):
+    await state.set_state(AdminMailing.reading_test_message)
+    return await send_message_and_delete_previous(
+        chat_id=msg.from_user.id,
+        text=mt.admin_test_mailing_hello,
+        redis_key='admin_test_mailing_message',
+    )
+
+
+@router.message(AdminMailing.reading_test_message)
+async def test_mailing_command_state_handler(msg: Message, state: FSMContext):
+    await bot.send_message(chat_id=env.TELEGRAM_BOT_ADMIN_ID, text=msg.text)
+    await state.clear()
