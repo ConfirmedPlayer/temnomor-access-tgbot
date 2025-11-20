@@ -1,5 +1,5 @@
 from aiogram import F, Router
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, FSInputFile
 
 from core import (
     message_templates as mt,  # TODO Move hardcoded captions to message templates
@@ -30,9 +30,14 @@ async def guide_apple_query_handler(query: CallbackQuery):
 
 @router.callback_query(F.data == 'guide_windows')
 async def guide_windows_query_handler(query: CallbackQuery):
-    await query.bot.send_video(
+    video_file = FSInputFile('./assets/windows/windows_guide.mp4')
+    a = await query.bot.send_video(
         chat_id=query.from_user.id,
-        video='BAACAgIAAxkDAAIFcWkfNwGQuhY64k0aMk-U7iNrVdspAAIdiwACQggAAUmr3uCEO538pjYE',
-        caption='Ссылка на скачивание: https://github.com/hiddify/hiddify-app\n\nДелайте всё чётко по инструкции в видео и у вас всё получится!',
+        video=video_file,
+        caption='Ссылка на скачивание: https://github.com/hiddify/hiddify-app\n\nДелайте всё чётко по инструкции в видео и у вас всё получится!\n\n<b>ОБЯЗАТЕЛЬНО запускайте программу от имени Администратора!</b>',
+    )
+    await query.bot.send_message(
+        chat_id=query.from_user.id,
+        text=a.video.file_id
     )
     await query.answer()
