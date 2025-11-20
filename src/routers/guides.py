@@ -12,7 +12,7 @@ router = Router(name=__name__)
 async def guide_android_query_handler(query: CallbackQuery):
     await query.bot.send_video(
         chat_id=query.from_user.id,
-        video='BAACAgIAAxkDAAIEJmkfJdH4uv9-9UnuU3U4goxZSRR5AAJiiAACHbABSYLypmjt8MOmNgQ',
+        video='BAACAgIAAxkDAAIFbWkfNutSRQs6cQmOkU9No1OYYyAhAAIbiwACQggAAUmxT6QKnf8ewDYE',
         caption='Делайте всё чётко по инструкции в видео и у вас всё получится!',
     )
     await query.answer()
@@ -22,7 +22,7 @@ async def guide_android_query_handler(query: CallbackQuery):
 async def guide_apple_query_handler(query: CallbackQuery):
     await query.bot.send_video(
         chat_id=query.from_user.id,
-        video='BAACAgIAAxkDAAIEF2kfILBeYgk17_nY-AQU4BmJmL1aAALrhwACHbABSc_TgJfvZ8cDNgQ',
+        video='BAACAgIAAxkDAAIFb2kfNvemorkeNNQAARM0d2SHHeNBsQACHIsAAkIIAAFJAl2YsH1Dsmo2BA',
         caption='Делайте всё чётко по инструкции в видео и у вас всё получится!',
     )
     await query.answer()
@@ -32,7 +32,7 @@ async def guide_apple_query_handler(query: CallbackQuery):
 async def guide_windows_query_handler(query: CallbackQuery):
     await query.bot.send_video(
         chat_id=query.from_user.id,
-        video='BAACAgIAAxkDAAIEMWkfMxtAf4UL2qA9GhUK7Iit1F4KAAKGiQACHbABSYEcfVEs8MyDNgQ',
+        video='BAACAgIAAxkDAAIFcWkfNwGQuhY64k0aMk-U7iNrVdspAAIdiwACQggAAUmr3uCEO538pjYE',
         caption='Ссылка на скачивание: https://github.com/hiddify/hiddify-app\n\nДелайте всё чётко по инструкции в видео и у вас всё получится!',
     )
     await query.answer()
