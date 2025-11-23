@@ -102,7 +102,7 @@ guide_caption = (
     'Делайте всё чётко по инструкции в видео и у вас всё получится!'
 )
 
-guide_caption_windows = 'Ссылка на скачивание: https://github.com/hiddify/hiddify-app\n\nДелайте всё чётко по инструкции в видео и у вас всё получится!\n\n<b>ОБЯЗАТЕЛЬНО запускайте программу от имени Администратора!</b>'
+guide_caption_windows = 'Ссылка на скачивание: https://github.com/throneproj/Throne\n\nДелайте всё чётко по инструкции в видео и у вас всё получится!'
 
 
 # Admin Message Templates
