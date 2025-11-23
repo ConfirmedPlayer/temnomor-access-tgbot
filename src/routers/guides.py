@@ -1,5 +1,5 @@
 from aiogram import F, Router
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, FSInputFile
 
 from core import message_templates as mt
 
@@ -28,9 +28,11 @@ async def guide_apple_query_handler(query: CallbackQuery):
 
 @router.callback_query(F.data == 'guide_windows')
 async def guide_windows_query_handler(query: CallbackQuery):
-    await query.bot.send_video(
+    video_file = FSInputFile('./assets/windows/windows_guide.mp4')
+    a = await query.bot.send_video(
         chat_id=query.from_user.id,
-        video='BAACAgIAAxkDAAIFgmkfSJ7gmkgSyhAmExmbNX4NJFZ_AAKAjAACQggAAUkrT0ad2rwm3jYE',
+        video=video_file,
         caption=mt.guide_caption_windows,
     )
+    await query.bot.send_message(chat_id=query.from_user.id, text=a.video.file_id)
     await query.answer()
