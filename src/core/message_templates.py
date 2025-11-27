@@ -101,8 +101,15 @@ payment_expired = 'Время для оплаты вышло. Пожалуйст
 subscription_name_already_exists = 'Подписка с таким же названием у вас уже есть. Пожалуйста, выберите другое:'
 
 
-guide_caption = (
-    'Делайте всё чётко по инструкции в видео и у вас всё получится!'
+guide_caption_android = (
+    'Делайте всё чётко по инструкции в видео и у вас всё получится!\n\n'
+    'Ссылка на скачивание приложения: https://github.com/2dust/v2rayNG/releases/latest'
+)
+
+guide_caption_ios = (
+    'Делайте всё чётко по инструкции в видео и у вас всё получится!\n'
+    'Инструкция на iOS и MacOS полностью аналогична.\n\n'
+    'Ссылка на скачивание: https://apps.apple.com/kz/app/happ-proxy-utility/id6504287215'
 )
 
 guide_caption_windows = 'Ссылка на скачивание: https://github.com/throneproj/Throne\n\nДелайте всё чётко по инструкции в видео и у вас всё получится!'
