@@ -1,5 +1,5 @@
 from aiogram import F, Router
-from aiogram.types import CallbackQuery, FSInputFile
+from aiogram.types import CallbackQuery
 
 from core import message_templates as mt
 
@@ -8,30 +8,20 @@ router = Router(name=__name__)
 
 @router.callback_query(F.data == 'guide_android')
 async def guide_android_query_handler(query: CallbackQuery):
-    video_file = FSInputFile('./assets/android/android_guide.mp4')
-    a = await query.bot.send_video(
+    await query.bot.send_video(
         chat_id=query.from_user.id,
-        video=video_file,
-        caption=mt.guide_caption,
-    )
-    await query.bot.send_message(
-        chat_id=query.from_user.id,
-        text=a.video.file_id
+        video='BAACAgIAAxkDAAIGbmkoSVUKRiXnSiS_Z5KdU6vyWbEcAAKhhgACTKZASXTmqBDtZYIBNgQ',
+        caption=mt.guide_caption_android,
     )
     await query.answer()
 
 
 @router.callback_query(F.data == 'guide_apple')
 async def guide_apple_query_handler(query: CallbackQuery):
-    video_file = FSInputFile('./assets/ios/ios_macos_guide.mp4')
-    a = await query.bot.send_video(
+    await query.bot.send_video(
         chat_id=query.from_user.id,
-        video=video_file,
-        caption=mt.guide_caption,
-    )
-    await query.bot.send_message(
-        chat_id=query.from_user.id,
-        text=a.video.file_id
+        video='BAACAgIAAxkDAAIGbGkoSOgQtUIfBBuBYJP9x7pqRQ9qAAKbhgACTKZASed4cE54lQAB5zYE',
+        caption=mt.guide_caption_ios,
     )
     await query.answer()
 
