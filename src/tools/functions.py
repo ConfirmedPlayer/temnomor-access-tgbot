@@ -106,8 +106,8 @@ async def update_subscription_and_send_message(
     payment_id: StringifiedUUID,
     telegram_user_id: TelegramUserId,
 ) -> None:
-    new_expiry_time = datetime.now().timestamp() + timedelta(days=30)
-    new_expiry_time = new_expiry_time * 1000  # to milliseconds
+    new_expiry_time = datetime.now() + timedelta(days=30)
+    new_expiry_time = new_expiry_time.timestamp() * 1000  # to milliseconds
     await x_ui_session.update_client_by_uuid(
         client_uuid=client_uuid,
         subscription_expiration=new_expiry_time,
