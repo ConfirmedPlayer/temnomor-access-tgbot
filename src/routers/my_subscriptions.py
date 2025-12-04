@@ -5,6 +5,7 @@ from aiogram.exceptions import TelegramBadRequest
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, CopyTextButton, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+from loguru import logger
 
 import core.message_templates as mt
 from core.config import env, x_ui_session
@@ -200,6 +201,10 @@ async def rename_subscription_state_handler(msg: Message, state: FSMContext):
 
     await x_ui_session.update_client_by_uuid(
         client_uuid=subscription_uuid, subscription_name=subscription_name
+    )
+
+    logger.info(
+        f'User: {msg.from_user.id} renamed his subscription to {subscription_name}'
     )
 
     await send_message_and_delete_previous(

@@ -2,6 +2,7 @@ import asyncio
 from datetime import datetime, timedelta
 
 from aiomoney.schemas import InvoiceSource
+from loguru import logger
 
 from core import message_templates as mt
 from core.config import bot, env, scheduler, x_ui_session, yoomoney
@@ -57,8 +58,11 @@ async def create_renewal_invoice_url(
 
 
 async def is_payment_successful(payment_id: StringifiedUUID) -> bool:
-    # return random.choice((True, False, False))
-    return await yoomoney.is_payment_successful(payment_id)
+    # return random.choice((True, False))
+    payment_successful = await yoomoney.is_payment_successful(payment_id)
+    if payment_successful:
+        logger.info('Somebody just bought subscription')
+    return payment_successful
 
 
 async def check_payment_in_background(
