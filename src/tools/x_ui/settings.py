@@ -11,7 +11,7 @@ class XUISettings:
     email: str
     subId: str
     flow: str = 'xtls-rprx-vision'
-    limitIp: int = 1
+    limitIp: int = 2
     totalGB: int = 0
     expiryTime: UnixTimeStampInMilliseconds = 0
     enable: bool = True
