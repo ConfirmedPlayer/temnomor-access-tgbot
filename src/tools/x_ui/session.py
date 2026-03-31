@@ -81,6 +81,24 @@ class XUISession:
                 f'Message: {response["msg"] if response else None}'
             )
             return {}
+    
+    async def add_bonus_days_to_all_subscriptions(self, days: int) -> bool:
+        all_subscriptions = await self.get_all_subscriptions()
+        for subscription in all_subscriptions:
+            new_expiration_time = subscription.expiryTime + days * 24 * 60 * 60 * 1000
+            logger.info(new_expiration_time)
+            return
+            success = await self.update_client_by_uuid(
+                client_uuid=subscription.id,
+                subscription_expiration=new_expiration_time
+            )
+            if not success:
+                logger.error(
+                    f'Failed to add bonus days to subscription with UUID: {subscription.id}'
+                )
+                return False
+        logger.success(f'Added {days} bonus days to all subscriptions successfully.')
+        return True
 
     async def get_all_online_clients(self) -> set[str]:
         url = env.X_UI_API_URL + '/onlines'

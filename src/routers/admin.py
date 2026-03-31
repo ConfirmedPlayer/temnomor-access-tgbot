@@ -173,3 +173,8 @@ async def test_mailing_command_handler(msg: Message, state: FSMContext):
 async def test_mailing_command_state_handler(msg: Message, state: FSMContext):
     await bot.send_message(chat_id=env.TELEGRAM_BOT_ADMIN_ID, text=msg.text)
     await state.clear()
+
+@router.message(AdminCommandFilter('/add_bonus_days'))
+async def admin_add_bonus_days_command_handler(msg: Message):
+    await x_ui_session.add_bonus_days_to_all_subscriptions(days=3)
+    await msg.answer(text=mt.admin_add_bonus_days_successful)

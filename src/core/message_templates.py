@@ -140,3 +140,5 @@ admin_test_mailing_hello = (
 )
 
 admin_mailing_success = 'Рассылка завершена.'
+
+admin_add_bonus_days_successful = 'Бонусные дни успешно добавлены ко всем подпискам!'
