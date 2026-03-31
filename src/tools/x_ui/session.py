@@ -85,6 +85,11 @@ class XUISession:
     async def add_bonus_days_to_all_subscriptions(self, days: int) -> bool:
         all_subscriptions = await self.get_all_subscriptions()
         for subscription in all_subscriptions:
+            if subscription.expiryTime == 0:
+                logger.info(
+                    f'Skipping subscription with UUID: {subscription.id} because it has no expiration time.'
+                )
+                continue
             new_expiration_time = subscription.expiryTime + days * 24 * 60 * 60 * 1000
             logger.info(new_expiration_time)
             return
