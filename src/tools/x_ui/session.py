@@ -118,8 +118,7 @@ class XUISession:
         response = await self.request_json(url=url, method='POST')
         if response['obj'] == 'No IP Record':
             return []
-        print(type(response['obj']))
-        client_ips: list[str] = orjson.loads(response['obj'])
+        client_ips: list[str] = orjson.loads(str(response['obj']))
         if not isinstance(client_ips, list):
             return []
         return client_ips
