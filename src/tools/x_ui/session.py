@@ -119,6 +119,7 @@ class XUISession:
         if response['obj'] == 'No IP Record':
             return []
         client_ips: list[str] = orjson.loads(response['obj'])
+        print(type(client_ips))
         if not isinstance(client_ips, list):
             return []
         return client_ips
