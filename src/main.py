@@ -29,11 +29,11 @@ async def clear_connections() -> None:
 
 
 def add_jobs_to_scheduler() -> None:
-    scheduler.add_job(
-        func=disallow_simultaneous_connections,
-        max_instances=1,
-        next_run_time=datetime.now(),
-    )
+    #scheduler.add_job(
+    #    func=disallow_simultaneous_connections,
+    #    max_instances=1,
+    #    next_run_time=datetime.now(),
+    #)
 
     scheduler.add_job(
         func=notify_user_about_subscription_expiration,
