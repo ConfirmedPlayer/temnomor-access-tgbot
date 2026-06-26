@@ -10,7 +10,6 @@ from loguru import logger
 import core.message_templates as mt
 from core.config import env, x_ui_session
 from keyboards import (
-    create_renewal_invoice_keyboard,
     guides_keyboard,
     user_keyboard,
 )
