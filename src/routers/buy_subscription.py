@@ -20,7 +20,7 @@ from tools.payments import create_invoice_url, is_payment_successful
 router = Router(name=__name__)
 
 
-@router.callback_query(F.data == 'buy_subscription')
+@router.callback_query(F.data == 'buy_subscription12')
 async def buy_subscription_query_handler(query: CallbackQuery):
     message_id = await redis_get_message_id(
         f'start_message:{query.from_user.id}'
@@ -46,7 +46,7 @@ async def buy_subscription_query_handler(query: CallbackQuery):
         return await force_buy_subscription_query_handler(query)
 
 
-@router.callback_query(F.data == 'force_buy_subscription')
+@router.callback_query(F.data == 'force_buy_subscription12')
 async def force_buy_subscription_query_handler(
     query: CallbackQuery, state: FSMContext | None = None
 ):
@@ -73,7 +73,7 @@ async def force_buy_subscription_query_handler(
     await query.answer()
 
 
-@router.callback_query(F.data == 'cancel')
+@router.callback_query(F.data == 'cancel12')
 async def cancel_and_return_to_main_menu(
     query: CallbackQuery, state: FSMContext
 ):
@@ -87,7 +87,7 @@ async def cancel_and_return_to_main_menu(
     await query.answer(text=mt.operation_cancelled, show_alert=True)
 
 
-@router.callback_query(F.data == 'cancel_with_warning')
+@router.callback_query(F.data == 'cancel_with_warning12')
 async def cancel_with_warning_query_handler(query: CallbackQuery):
     await query.answer(text=mt.operation_cancelled, show_alert=True)
     message_id = await redis_get_message_id(
@@ -101,7 +101,7 @@ async def cancel_with_warning_query_handler(query: CallbackQuery):
     )
 
 
-@router.callback_query(F.data == 'continue_to_choosing_name')
+@router.callback_query(F.data == 'continue_to_choosing_name12')
 async def continue_to_choosing_name_query_handler(
     query: CallbackQuery, state: FSMContext
 ):
@@ -151,7 +151,7 @@ async def handle_name_and_create_payment(msg: Message, state: FSMContext):
     )
 
 
-@router.callback_query(F.data.startswith('payment_id'))
+@router.callback_query(F.data.startswith('payment_id12'))
 async def check_payment_query_handler(query: CallbackQuery, state: FSMContext):
     payment_id = query.data.replace('payment_id:', '', 1)
     subscription_name = (await state.get_data())['subscription_name']

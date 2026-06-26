@@ -134,15 +134,15 @@ async def subscription_query_handler(query: CallbackQuery, state: FSMContext):
     message = f'Подписка "{subscription_name}" до {human_readable_date} {"(✅ Активна)" if not expired else "(❌ Неактивна)"}'
     keyboard = InlineKeyboardBuilder()
     keyboard.max_width = 1
-    keyboard.button(
-        text='🛒 Продлить подписку',
-        callback_data=f'renew_subscription:{subscription_uuid}',
-    )
+    #keyboard.button(
+    #    text='🛒 Продлить подписку',
+    #    callback_data=f'renew_subscription:{subscription_uuid}',
+    #)
     if not expired:
-        keyboard.button(
-            text='📇 Изменить название',
-            callback_data=f'rename_subscription:{subscription_uuid}',
-        )
+        #keyboard.button(
+        #    text='📇 Изменить название',
+        #    callback_data=f'rename_subscription:{subscription_uuid}',
+        #)
         keyboard.button(
             text='🌐 Скопировать',
             copy_text=CopyTextButton(text=subscription_url),
@@ -215,7 +215,7 @@ async def rename_subscription_state_handler(msg: Message, state: FSMContext):
     )
 
 
-@router.callback_query(F.data.startswith('renew_subscription'))
+@router.callback_query(F.data.startswith('renew_subscription2'))
 async def renew_subscription_query_handler(
     query: CallbackQuery, state: FSMContext
 ):
@@ -242,7 +242,7 @@ async def renew_subscription_query_handler(
     await query.answer()
 
 
-@router.callback_query(F.data.startswith('renewal_payment_id'))
+@router.callback_query(F.data.startswith('renewal_payment_id2'))
 async def check_payment_query_handler(query: CallbackQuery, state: FSMContext):
     payment_id = query.data.replace('renewal_payment_id:', '', 1)
     subscription_uuid = (await state.get_data())['subscription_uuid']

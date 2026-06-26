@@ -5,9 +5,10 @@ from core.config import env
 
 user_keyboard = InlineKeyboardBuilder()
 user_keyboard.max_width = 2
-user_keyboard.button(
+'''user_keyboard.button(
     text='🛒 Купить подписку', callback_data='buy_subscription'
 )
+'''
 user_keyboard.button(text='🌐 Мои подписки', callback_data='my_subscriptions')
 user_keyboard.button(
     text='Задать вопрос разработчику',

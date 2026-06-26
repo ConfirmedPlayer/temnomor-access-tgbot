@@ -28,20 +28,20 @@ async def clear_connections() -> None:
     await redis_storage.close()
 
 
-def add_jobs_to_scheduler() -> None:
+#def add_jobs_to_scheduler() -> None:
     #scheduler.add_job(
     #    func=disallow_simultaneous_connections,
     #    max_instances=1,
     #    next_run_time=datetime.now(),
     #)
 
-    scheduler.add_job(
-        func=notify_user_about_subscription_expiration,
-        trigger='interval',
-        days=1,
-        max_instances=1,
-        next_run_time=datetime.now(),
-    )
+    #scheduler.add_job(
+    #    func=notify_user_about_subscription_expiration,
+    #    trigger='interval',
+    #    days=1,
+    #    max_instances=1,
+    #    next_run_time=datetime.now(),
+    #)
 
 
 async def main() -> None:
@@ -57,7 +57,7 @@ async def main() -> None:
         dp.message.middleware(PrivateChatsOnlyMiddleware())
 
         scheduler.start()
-        add_jobs_to_scheduler()
+        #add_jobs_to_scheduler()
 
         logger.info('Telegram bot polling has started...')
         await dp.start_polling(bot)

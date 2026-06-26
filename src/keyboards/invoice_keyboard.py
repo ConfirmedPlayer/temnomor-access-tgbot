@@ -5,7 +5,7 @@ from core.env import env
 from core.types import StringifiedUUID
 
 
-def create_invoice_keyboard(
+'''def create_invoice_keyboard(
     payment_id: StringifiedUUID, invoice_url: str
 ) -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardBuilder()
@@ -38,3 +38,4 @@ def create_renewal_invoice_keyboard(
         text='🚫 Отменить покупку', callback_data='cancel_with_warning'
     )
     return keyboard.as_markup()
+'''
